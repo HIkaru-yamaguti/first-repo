@@ -46,4 +46,6 @@ func main() {
 	fmt.Println(m4)
 
 	fmt.Println(len(m4))
+
+	fmt.Println(m3)
 }
