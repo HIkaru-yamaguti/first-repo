@@ -5,47 +5,33 @@ import (
 )
 
 func main() {
-	var m = map[string]int{"A":100,"B":200}
-	fmt.Println(m)
+	var ch1 chan int
+/*
+	var ch2 <-chan int
 
-	m2 := map[string]int{"A":100,"B":200}
-	fmt.Println(m2)
+	var ch3 chan<- int
 
-	m3 := map[int]string{
-		1:"a",
-		2:"b",
-	}
-	fmt.Println(m3)
+	fmt.Println(ch1, ch2, ch3)*/
 
-	m4 := make(map[int]string)
-	fmt.Println(m4)
+	ch1 = make(chan int)
 
-	m4[1] = "japan"
-	m4[2] = "usa"
-	fmt.Println(m4)
+	ch2 := make(chan int)
+	fmt.Println(cap(ch1))
+	fmt.Println(cap(ch2))
 
-	fmt.Println(m["A"])
-	fmt.Println(m4[1])
-	fmt.Println(m4[2], m3[1])
+	ch3 := make(chan int, 5)
+	fmt.Println(cap(ch3))
 
-	s, ok := m4[3]
-	if !ok {
-		fmt.Println("error")
-	}
-	fmt.Println(s, ok)
+	ch3 <-1
+	fmt.Println(len(ch3))
 
-	m4[2] = "us"
-	fmt.Println(m4)
+	ch3 <- 2
+	ch3 <- 3
+	fmt.Println(len(ch3))
 
-	m4[3] = "china"
-	fmt.Println(m4)
+	i := <- ch3
+	fmt.Println(i)
 
-	fmt.Println(len(m4))
-
-	delete(m4, 3)
-	fmt.Println(m4)
-
-	fmt.Println(len(m4))
-
-	fmt.Println(m3)
+	i2 := <- ch3
+	fmt.Println(i2)
 }
