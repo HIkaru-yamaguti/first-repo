@@ -2,36 +2,47 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
+func reciever(name string, ch chan int) {
+	for {
+		i, ok := <-ch
+		if !ok{
+			break
+		}
+		fmt.Println(name, i)
+		}
+		fmt.Println(name + "end")
+}
+
+
 func main() {
-	var ch1 chan int
+	ch1 := make(chan int, 2)
 /*
-	var ch2 <-chan int
+	ch1 <- 1
+	close(ch1)
 
-	var ch3 chan<- int
+	//ch1 <- 1
 
-	fmt.Println(ch1, ch2, ch3)*/
+	//fmt.Println(<-ch1)
 
-	ch1 = make(chan int)
+	i,ok := <-ch1
+	fmt.Println(i, ok)
 
-	ch2 := make(chan int)
-	fmt.Println(cap(ch1))
-	fmt.Println(cap(ch2))
+	i2,ok := <-ch1
+	fmt.Println(i2, ok)
+	*/
 
-	ch3 := make(chan int, 5)
-	fmt.Println(cap(ch3))
+	go reciever("1.goroutin", ch1)
+	go reciever("2.goroutin", ch1)
+	go reciever("3.goroutin", ch1)
 
-	ch3 <-1
-	fmt.Println(len(ch3))
-
-	ch3 <- 2
-	ch3 <- 3
-	fmt.Println(len(ch3))
-
-	i := <- ch3
-	fmt.Println(i)
-
-	i2 := <- ch3
-	fmt.Println(i2)
+	i := 0
+	for i < 100 {
+		ch1 <- i
+		i++
+	}
+	close(ch1)
+	time.Sleep(3 * time.Second)
 }
