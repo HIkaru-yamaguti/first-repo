@@ -5,27 +5,48 @@ import (
 
 )
 
-func main() {
-	ch1 := make(chan int, 2)
-	ch2 := make(chan string, 2)
+func Double(i int) {
+	i = i * 2
+}
 
-	ch2 <- "a"
-	ch1 <- 1
-	ch2 <- "b"
-	ch1 <- 2
+func Doublev2(i *int) {
+	*i = *i * 2
+}
 
-/*
-	v1 := <-ch1
-	v2 := <-ch2
-
-	fmt.Println(v1)
-	fmt.Println(v2)
-	*/
-
-	select {
-	case v1 := <-ch1:
-		fmt.Println(v1 + 1000)
-	case v2 := <-ch2:
-		fmt.Println(v2 + "!?")
+func Doublev3 (s []int) {
+	for i, v := range s {
+		s[i] = v * 2
 	}
+}
+func main() {
+	var n int = 100
+	fmt.Println(n)
+
+	fmt.Println(&n)
+
+	Double(n)
+
+	fmt.Println(n)
+
+	var p *int = &n
+	fmt.Println(p)
+	fmt.Println(*p)
+/*
+	*p = 300
+	fmt.Println(n)
+
+	n= 200
+	fmt.Println(*p)
+*/
+	Doublev2(&n)
+	fmt.Println(n)
+
+	Doublev2(p)
+	fmt.Println(*p)
+
+	var sl []int = []int{1, 2, 3}
+
+	Doublev3(sl)
+	fmt.Println(sl)
+
 }
