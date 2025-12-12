@@ -2,40 +2,37 @@ package main
 
 import (
 	"fmt"
+
 )
 
-type User struct {
-	Name string
-	Age  int
+type Stringfy interface {
+	ToString() string
 }
 
-type Users []*User
-/*
-type users struct {
-	Users []*Users
+type Person struct {
+	Name string
+	Age int
 }
-*/
+
+func (p *Person) ToString() string {
+	return fmt.Sprintf("Name=%v, Age=%v", p.Name, p.Age)
+}
+type Car struct {
+	Number string
+	Model string
+}
+
+func (c *Car) ToString() string {
+	return fmt.Sprintf("Number=%v, Model=%v", c.Number, c.Model)
+}
 
 func main() {
-	user1 := User{Name: "user1", Age: 10}
-	user2 := User{Name: "user1", Age: 20}
-	user3 := User{Name: "user1", Age: 30}
-	user4 := User{Name: "user1", Age: 40}
-
-	users := Users{}
-
-	users = append(users,&user1)
-	users = append(users,&user2)
-	users = append(users,&user3, &user4)
-
-	for _, u := range users{
-		fmt.Println(*u)
+	vs := []Stringfy{
+		&Person{Name: "taro", Age: 21},
+		&Car{Number: "123=456", Model: "AB-1234"},
 	}
 
-	users2 := make([]*User, 0)
-	users2 = append(users2,  &user1, &user2)
-
-	for _, u := range users2{
-		fmt.Println(*u)
+	for _, v := range vs {
+		fmt.Println(v.ToString())
 	}
 }
