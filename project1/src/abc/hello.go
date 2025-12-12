@@ -4,35 +4,32 @@ import (
 	"fmt"
 
 )
+//カスタムエラー
+//interface
+/*
+type error interface {
+	Error() string
+}*/
 
-type Stringfy interface {
-	ToString() string
+type Myerror struct {
+	Message string
+	ErrCode int
 }
 
-type Person struct {
-	Name string
-	Age int
+func (e *Myerror) Error() string {
+	return e.Message
 }
 
-func (p *Person) ToString() string {
-	return fmt.Sprintf("Name=%v, Age=%v", p.Name, p.Age)
-}
-type Car struct {
-	Number string
-	Model string
-}
-
-func (c *Car) ToString() string {
-	return fmt.Sprintf("Number=%v, Model=%v", c.Number, c.Model)
+func RaiseError() error {
+	return &Myerror{Message: "これはカスタムエラーです", ErrCode: 500}
 }
 
 func main() {
-	vs := []Stringfy{
-		&Person{Name: "taro", Age: 21},
-		&Car{Number: "123=456", Model: "AB-1234"},
-	}
+	err := RaiseError()
+	fmt.Println(err.Error())
 
-	for _, v := range vs {
-		fmt.Println(v.ToString())
+	e, ok := err.(*Myerror)
+	if ok {
+		fmt.Println(e.ErrCode)
 	}
 }
