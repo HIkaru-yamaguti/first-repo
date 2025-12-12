@@ -4,32 +4,22 @@ import (
 	"fmt"
 
 )
-//カスタムエラー
 //interface
+//fmt.Stringer
 /*
-type error interface {
-	Error() string
+type Stringer interface {
+	String(string)
 }*/
 
-type Myerror struct {
-	Message string
-	ErrCode int
+type Point struct {
+	A int
+	B string
 }
 
-func (e *Myerror) Error() string {
-	return e.Message
+func (p *Point) String() string {
+	return fmt.Sprintf("<<%v, %v>>", p.A, p.B)
 }
-
-func RaiseError() error {
-	return &Myerror{Message: "これはカスタムエラーです", ErrCode: 500}
-}
-
 func main() {
-	err := RaiseError()
-	fmt.Println(err.Error())
-
-	e, ok := err.(*Myerror)
-	if ok {
-		fmt.Println(e.ErrCode)
-	}
+	p := &Point{100, "ABC"}
+	fmt.Println(p)
 }
