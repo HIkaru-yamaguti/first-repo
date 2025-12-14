@@ -4,22 +4,26 @@ import (
 	"fmt"
 
 )
-//interface
-//fmt.Stringer
-/*
-type Stringer interface {
-	String(string)
-}*/
 
-type Point struct {
-	A int
-	B string
+//スコープ
+
+
+func appName() string {
+	const AppName = "goaApp"
+	var Version string = "1.0.0"
+	return AppName + " " + Version
 }
 
-func (p *Point) String() string {
-	return fmt.Sprintf("<<%v, %v>>", p.A, p.B)
+func Do(s string) (b string) {
+	//var b string = s
+	b = s
+
+	return b
 }
 func main() {
-	p := &Point{100, "ABC"}
-	fmt.Println(p)
+	fmt.Println("hello")
+
+	fmt.Println(appName())
+
+	fmt.Println(Do("Go言語"))
 }
