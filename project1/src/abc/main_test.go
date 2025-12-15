@@ -2,6 +2,7 @@ package main
 
 import "testing"
 
+
 var Debug bool = false
 
 func TestIsOne(t *testing.T) {
